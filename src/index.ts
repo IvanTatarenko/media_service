@@ -1,12 +1,12 @@
 import express from 'express';
 
 const app = express();
-const port = 3000;
+const port = 4002;
 
-app.use(express.static('media'));
+app.use('/media', express.static('media'));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('vedia service');
 });
 
 app.listen(port, () => {

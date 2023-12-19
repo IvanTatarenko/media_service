@@ -5,7 +5,7 @@ FROM node:latest as builder
 WORKDIR /usr/src/app
 
 # Копіювання package.json та package-lock.json
-COPY package*.json ./
+COPY package.json package-lock.json ./
 
 # Встановлення залежностей проекту
 RUN npm install
@@ -24,3 +24,5 @@ WORKDIR /usr/src/app
 
 # Копіювання скомпільованих файлів з попереднього етапу
 COPY --from=builder /usr/src/app/dist ./dist
+
+CMD ["node", "dist/index.js"]

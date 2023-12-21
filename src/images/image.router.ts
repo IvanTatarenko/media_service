@@ -8,4 +8,6 @@ router.get('/', imageController.getAll);
 
 router.post('/', imageController.processSaveImage);
 
+router.delete('/:id', imageController.deleteImage);
+
 export default router;

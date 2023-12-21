@@ -8,7 +8,13 @@ export default class ImageService {
     await this.save(imgWebpBuffer, id + "_original");
     const img200 = await this.resizing(imgWebpBuffer, 200);
     await this.save(img200, id + "_200");
-    return 'ok';
+    return "ok";
+  }
+
+  async processDeleteImage(id: string) {
+    await this.delete(`media/${id}_original.webp`);
+    await this.delete(`media/${id}_200.webp`);
+    return "ok";
   }
 
   async save(buffer: Buffer, name: string) {
@@ -32,5 +38,13 @@ export default class ImageService {
 
   async resizing(buffer: Buffer, size: number): Promise<Buffer> {
     return sharp(buffer).resize(size).toBuffer();
+  }
+
+  async delete(filePath: string) {
+    try {
+      fs.unlinkSync(filePath);
+    } catch {
+      return "err";
+    }
   }
 }

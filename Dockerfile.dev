@@ -1,8 +1,17 @@
 FROM node:alpine
+
+# Додати залежності для sharp
+RUN apk add --no-cache vips-dev fftw-dev build-base python3 make g++
+
 WORKDIR /app
+
 COPY package.json ./
 COPY package-lock.json ./
+
+RUN npm install
+
 COPY ./ ./
-RUN npm i
-EXPOSE 4001
+
+EXPOSE 4002
+
 CMD ["npm", "run", "start"]

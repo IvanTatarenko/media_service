@@ -1,10 +1,10 @@
 {
   "name": "media_service",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "start": "nodemon --legacy-watch --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "build": "tsc",
     "serve": "node dist/index.js"
   },
@@ -13,11 +13,14 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/node": "^20.10.5",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "@img/sharp-linuxmusl-x64": "^0.33.1",
+    "express": "^4.18.2",
+    "sharp": "^0.33.1"
   }
 }

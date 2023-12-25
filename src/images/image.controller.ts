@@ -1,21 +1,35 @@
+import { Request, Response } from "express";
 import ImageService from "./image.service";
 
 export default class ImageController {
-  // Отримання списку користувачів
-  async getAll(req: any, res: any) {
+  async getAll(req: Request, res: Response) {
     res.send("media service");
   }
 
-  async processSaveImage(req: any, res: any) {
+  async processSaveImage(req: Request, res: Response) {
     const imageService = new ImageService();
-    const result = imageService.processSaveImage(req.body.buffer, req.body.id);
-    res.send(result);
+    try {
+      await imageService.processSaveImage(
+        req.body.buffer,
+        req.body.id
+      );
+      res.status(201).json("Created");
+    } catch (error: any) {
+      res.status(500).send("Error created image");
+    }
   }
 
-  async deleteImage(req: any, res: any) {
+  async deleteImage(req: Request, res: Response) {
     const imageService = new ImageService();
     const { id } = req.params;
-    const result = imageService.processDeleteImage(id);
-    res.send(result);
+    try {
+      await imageService.processDeleteImage(id);
+      res.status(200).send("Deleted");
+    }
+    catch {
+      res.status(500).send("Error deleted image");
+    }
+    
+    
   }
 }

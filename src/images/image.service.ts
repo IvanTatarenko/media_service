@@ -1,6 +1,7 @@
 import fs from "fs";
 import sharp from "sharp";
 import Logger from "../logger/logger.service";
+import { Response } from "express";
 
 export default class ImageService {
   private readonly logger = new Logger(ImageService.name);
@@ -11,23 +12,23 @@ export default class ImageService {
     await this.save(imgWebpBuffer, id + "_original");
     const img200 = await this.resizing(imgWebpBuffer, 200);
     await this.save(img200, id + "_200");
-    return "ok";
+    return;
   }
 
   async processDeleteImage(id: string) {
     await this.delete(`media/${id}_original.webp`);
     await this.delete(`media/${id}_200.webp`);
-    this.logger.log('Image deleted')
-    return "ok";
+    this.logger.log("Image deleted");
+    return;
   }
 
   async save(buffer: Buffer, name: string) {
     const filePath = `media/`;
     fs.writeFile(filePath + name + ".webp", buffer, (err) => {
       if (err) {
-        console.error(`[ImageService] Error writing file ${name}`, err);
+        this.logger.err(`Error writing file ${name}, ${err}`);
       } else {
-        console.log(`[ImageService] File ${name} written successfully`);
+        this.logger.log(`File ${name} written successfully`);
       }
     });
   }

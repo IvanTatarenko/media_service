@@ -1,7 +1,6 @@
 import fs from "fs";
 import sharp from "sharp";
 import Logger from "../logger/logger.service";
-import { Response } from "express";
 
 export default class ImageService {
   private readonly logger = new Logger(ImageService.name);
@@ -12,12 +11,18 @@ export default class ImageService {
     await this.save(imgWebpBuffer, id + "_original");
     const img200 = await this.resizing(imgWebpBuffer, 200);
     await this.save(img200, id + "_200");
+    const img500 = await this.resizing(imgWebpBuffer, 500);
+    await this.save(img500, id + "_500");
+    const img1000 = await this.resizing(imgWebpBuffer, 1000);
+    await this.save(img1000, id + "_1000");
     return;
   }
 
   async processDeleteImage(id: string) {
     await this.delete(`media/${id}_original.webp`);
     await this.delete(`media/${id}_200.webp`);
+    await this.delete(`media/${id}_500.webp`);
+    await this.delete(`media/${id}_1000.webp`);
     this.logger.log("Image deleted");
     return;
   }

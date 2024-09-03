@@ -11,7 +11,8 @@ export default class ImageController {
     try {
       await imageService.processSaveImage(
         req.body.buffer,
-        req.body.id
+        req.body.id,
+        req.body.sizes || [200, 500, 1000]
       );
       res.status(201).json("Created");
     } catch (error: any) {
